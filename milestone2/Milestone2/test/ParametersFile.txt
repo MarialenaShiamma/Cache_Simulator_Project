@@ -1,0 +1,27 @@
+RAM_SIZE 1024
+CACHE_SIZE 512
+WORD_SIZE 4
+Number_of_words_blocks_per_block 4
+temp 3
+
+Direct_Mapped 1
+N_Way_Set_Associative 0
+Fully_Associative 0
+NumberOfFlushes 3
+
+Amount_of_Ways 2
+
+FIFO 0
+LRU 0
+RANDOM 1
+
+WRITE_BACK 1
+WRITE_THROUGH 0
+
+WRITE_ALLOCATE 1
+NO_WRITE_ALLOCATE 0
+
+MISS_CYCLES_READ_CACHE 3
+MISS_CYCLES_READ_RAM 4
+MISS_CYCLES_WRITE_CACHE 3
+MISS_CYCLES_WRITE_RAM 3
