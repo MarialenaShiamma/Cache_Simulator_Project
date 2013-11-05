@@ -903,7 +903,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 											//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
 												total_penalty_cycles = total_penalty_cycles + (MCRC); //NWA means that we don't write in the Cache so we only read from it
-												penalty_cycles = (MCRC); //NWA means that we don't write in the Cache so we only read from it
+												penalty_cycles = (MCRC+ MCWC); //NWA means that we don't write in the Cache so we only read from it
 											}
 
 											//Write Through & Write Allocate => Write in Cache and RAM (WT) 
@@ -944,7 +944,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
 												total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-												penalty_cycles =  (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+												penalty_cycles =  (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 											}
 
 											//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -956,7 +956,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												//Write Back & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
 												total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-												penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+												penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 											}
 
 											Pointer1->Dirty1 = 1; //For Write Back
@@ -989,7 +989,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
 												total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-												penalty_cycles =  (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+												penalty_cycles =  (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 											}
 
 											//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -1001,7 +1001,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												//Write Back & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
 												total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-												penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+												penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 											}
 	
 										Pointer1->Dirty1 = 1; //For Write Back
@@ -1034,7 +1034,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
 												total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-												penalty_cycles =  (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+												penalty_cycles =  (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 											}
 
 											//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -1046,7 +1046,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												//Write Back & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
 												total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-												penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+												penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 											}
 
 									//code to write to the output file
@@ -1093,8 +1093,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 											
 											//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
-												total_penalty_cycles = total_penalty_cycles + (MCRC); //NWA means that we don't write in the Cache so we only read from it
-												penalty_cycles = (MCRC); //NWA means that we don't write in the Cache so we only read from it
+												total_penalty_cycles = total_penalty_cycles + (MCRC+ MCWC); //NWA means that we don't write in the Cache so we only read from it
+												penalty_cycles = (MCRC+ MCWC); //NWA means that we don't write in the Cache so we only read from it
 											}
 
 											//Write Through & Write Allocate => Write in Cache and RAM (WT) 
@@ -1139,8 +1139,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 												//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 												else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
-													total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-													penalty_cycles = (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+													total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+													penalty_cycles = (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 												}
 
 												//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -1151,8 +1151,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 												//Write Through & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 												else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
-													total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-													penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+													total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
+													penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 												}
 
 												Pointer2->BlockOffset2[BlockOffsetDec] = Address;
@@ -1189,8 +1189,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 														//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 														else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
-															total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-															penalty_cycles = (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+															total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+															penalty_cycles = (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 														}
 
 														//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -1201,8 +1201,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 														//Write Through & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 														else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
-															total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-															penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+															total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
+															penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 														}
 
 														Pointer2b->Valid2 = 1;
@@ -1241,8 +1241,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 											//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
-												total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-												penalty_cycles = (MCRC + MCRR ); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+												total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+												penalty_cycles = (MCRC + MCRR + MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 											}
 
 											//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -1253,8 +1253,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 											//Write Through & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
-												total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-												penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+												total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
+												penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 											}
 
 
@@ -1374,8 +1374,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												
 								//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 								else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
-									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-									penalty_cycles =  (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+									penalty_cycles =  (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 								}
 
 								//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -1386,8 +1386,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 								//Write Back & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 								else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
-									total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-									penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+									total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
+									penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 								}
 
 								//code to write to the output file
@@ -1438,7 +1438,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 								//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 								else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
 									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-									penalty_cycles =  (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+									penalty_cycles =  (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 								}
 
 								//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -1449,8 +1449,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 								//Write Back & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 								else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
-									total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-									penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+									total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
+									penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 								}
 
 								//code to write to the output file
@@ -1492,8 +1492,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												
 								//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 								else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
-									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-									penalty_cycles =  (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+									penalty_cycles =  (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 								}
 
 								//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -1504,8 +1504,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 								//Write Back & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 								else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
-									total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-									penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+									total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
+									penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 								}
 
 								//code to write to the output file
@@ -1542,8 +1542,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 											
 											//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
-												total_penalty_cycles = total_penalty_cycles + (MCRC); //NWA means that we don't write in the Cache so we only read from it
-												penalty_cycles = (MCRC); //NWA means that we don't write in the Cache so we only read from it
+												total_penalty_cycles = total_penalty_cycles + (MCRC+ MCWC); //NWA means that we don't write in the Cache so we only read from it
+												penalty_cycles = (MCRC+ MCWC); //NWA means that we don't write in the Cache so we only read from it
 											}
 
 											//Write Through & Write Allocate => Write in Cache and RAM (WT) 
@@ -1593,8 +1593,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 											//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
-												total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-												penalty_cycles = (MCRC + MCRR ); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+												total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+												penalty_cycles = (MCRC + MCRR + MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 											}
 
 											//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -1605,8 +1605,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 											//Write Through & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 											else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
-												total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-												penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+												total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
+												penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 											}
 
 
@@ -1788,8 +1788,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												
 								//Write Back & No Write Allocate => Don't Write in RAM (WB) and don't write in Cache (NWA)
 								else if ((( WA == 0) && (NWA == 1)) && ( (WT == 0) && (WB == 1))){
-									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
-									penalty_cycles =  (MCRC + MCRR); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
+									penalty_cycles =  (MCRC + MCRR+ MCWC); //We read from Cache and read from RAM because we didn't find it in RAM. We don't bring it in Cache memory
 								}
 
 								//Write Through & Write Allocate  => Write in Cache and RAM (WT)
@@ -1800,8 +1800,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 								//Write Back & No Write Allocate => Write in Cache and RAM (WT) BUT you can't write in Cache (WB)
 								else if ((( WA == 0) && (NWA == 1)) && ( (WT == 1) && (WB == 0))){
-									total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR); //We read from the Cache and write in the RAM 
-									penalty_cycles = (MCRC + MCWR); //We read from the Cache and write in the RAM 
+									total_penalty_cycles = total_penalty_cycles + (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
+									penalty_cycles = (MCRC + MCWR+ MCWC); //We read from the Cache and write in the RAM 
 								}
 
 								//code to write to the output file
@@ -1939,8 +1939,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 									}	
 									//Different Tag
 									else{
-										penalty_cycles = (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
-										total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
+										penalty_cycles = (MCRC + MCRR+ MCWC); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
+										total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR + MCWC); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
 										misses++;
 										
 										//code to write to the output file
@@ -1953,8 +1953,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 								}
 								//Valid=0
 								else{								
-									penalty_cycles = (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
-									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //
+									penalty_cycles = (MCRC + MCRR + MCWC); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
+									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //
 									misses++;
 									
 									//code to write to the output file
@@ -2003,7 +2003,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 									}
 									//Different Block Offset
 									else{
-										penalty_cycles = (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
+										penalty_cycles = (MCRC + MCRR+ MCWC); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
 										total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
 										misses++;
 										inCache = 1; //When =1 it means that the address found or been written in Cache 
@@ -2019,8 +2019,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 									}
 								//Different Tag
 								else{
-									penalty_cycles =  (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
-									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
+									penalty_cycles =  (MCRC + MCRR+ MCWC); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
+									total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
 									misses++;
 									inCache = 1; //When =1 it means that the address found or been written in Cache 
 
@@ -2035,8 +2035,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 							}
 							//Valid=0
 							else{
-								penalty_cycles =  (MCRC + MCRR); //
-								total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //
+								penalty_cycles =  (MCRC + MCRR+ MCWC); //
+								total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //
 								misses++;
 								inCache = 1; //When =1 it means that the address found or been written in Cache 
 
@@ -2067,7 +2067,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 
 						//We couldn't find the Address NoWhere
 						if (inCache == 0){
-							total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR);
+							total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC);
 							penalty_cycles = (MCRC + MCRR);
 							//code to write to the output file
 							fprintf(OutputFilePointer, "   MISS ");
@@ -2116,8 +2116,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 										//Different Block Offset
 										else{
 											if (ReadModify == 0){
-												penalty_cycles = (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
-												total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
+												penalty_cycles = (MCRC + MCRR+ MCWC); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
+												total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
 												misses++;
 												inCache = 1; //When =1 it means that the address found or been written in Cache 
 												ReadModify =1;
@@ -2135,8 +2135,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 									//Different Tag
 									else{
 										if (ReadModify == 0){
-											penalty_cycles =  (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
-											total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
+											penalty_cycles =  (MCRC + MCRR+ MCWC); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
+											total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //We have to read from the cache and read from RAM after that because we didn't find the right address in the cache
 											misses++;
 											inCache = 1; //When =1 it means that the address found or been written in Cache 
 											ReadModify =1;
@@ -2157,8 +2157,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 								else{
 									//to not be repeated every time
 									if (ReadModify == 0){
-										penalty_cycles =  (MCRC + MCRR); //
-										total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR); //
+										penalty_cycles =  (MCRC + MCRR+ MCWC); //
+										total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC); //
 										misses++;
 										inCache = 1; //When =1 it means that the address found or been written in Cache 
 										ReadModify =1;
@@ -2180,8 +2180,8 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 					
 					//We couldn't find the Address NoWhere
 					if (inCache == 0){
-						total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR);
-						penalty_cycles = (MCRC + MCRR);
+						total_penalty_cycles = total_penalty_cycles + (MCRC + MCRR+ MCWC);
+						penalty_cycles = (MCRC + MCRR+ MCWC);
 						//code to write to the output file
 						fprintf(OutputFilePointer, "   MISS ");
 						fprintf(OutputFilePointer, "(not in Cache) ");
