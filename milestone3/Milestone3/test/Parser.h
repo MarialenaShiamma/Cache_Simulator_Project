@@ -648,7 +648,6 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												inVictim = 1;
 												Pointer1->Dirty1 = 1; //For Write Back
 												VictimHits++;
-												hits++;
 
 												//code to write to the output file
 												fprintf(OutputFilePointer, "  VICTIM ");
@@ -803,7 +802,7 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												inVictim = 1;
 												Pointer1->Dirty1 = 1; //For Write Back
 												VictimHits++;
-												hits++;
+
 
 												//code to write to the output file
 												fprintf(OutputFilePointer, "  VICTIM ");
@@ -1831,7 +1830,6 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												inVictim = 1;
 												Pointer1->Dirty1 = 1; //For Write Back
 												VictimHits++;
-												hits++;
 
 												//code to write to the output file
 												fprintf(OutputFilePointer, "  VICTIM ");
@@ -1986,7 +1984,6 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												inVictim = 1;
 												Pointer1->Dirty1 = 1; //For Write Back
 												VictimHits++;
-												hits++;
 
 												//code to write to the output file
 												fprintf(OutputFilePointer, "  VICTIM ");
@@ -3026,7 +3023,6 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 														inVictim = 1;
 														Pointer1->Dirty1 = 1; //For Write Back
 														VictimHits++;
-														hits++;
 
 														//code to write to the output file
 														fprintf(OutputFilePointer, "  VICTIM ");
@@ -3138,7 +3134,6 @@ void Parser(int temp,  int Direct_Mapped, int N_Way_Set_Associative, int Fully_A
 												inVictim = 1;
 												Pointer1->Dirty1 = 1; //For Write Back
 												VictimHits++;
-												hits++;
 
 												//code to write to the output file
 												fprintf(OutputFilePointer, "  VICTIM ");
